@@ -1,26 +1,25 @@
 import React from 'react'
 
-class TodoFilterItem extends React.Component {
-  render() {
-    const {name} = this.props
-
-    const style = {
-      color: 'blue',
-      cursor: 'pointer'
-    }
-
-    return <span style={style}>{name}</span>
+function TodoFilterItem({name, filterTodos, filter = 'all'}) {
+  function handleFilter() {
+    filterTodos(name)
   }
+
+  const style = {
+    color: 'blue',
+    cursor: 'pointer',
+    fontWeight: (filter === name) ? 'bold' : 'normal'
+  }
+
+  return <span style={style} onClick={handleFilter}>{name}</span>
 }
 
-export default class TodoFilter extends React.Component {
-  render() {
-    return (
-      <div>
-        <TodoFilterItem name="all" />{' / '}
-        <TodoFilterItem name="active" />{' / '}
-        <TodoFilterItem name="completed" />
-      </div>
-    )
-  }
+export default function TodoFilter(props) {
+  return (
+    <div>
+      <TodoFilterItem {...props} name="all" />{' / '}
+      <TodoFilterItem {...props} name="active" />{' / '}
+      <TodoFilterItem {...props} name="completed" />
+    </div>
+  )
 }
