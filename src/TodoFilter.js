@@ -1,25 +1,30 @@
 import React from 'react'
+import {useObserver} from 'mobx-react'
 
-function TodoFilterItem({name, filterTodos, filter = 'all'}) {
+import {useTodoStore} from './hooks'
+
+const TodoFilterItem = function TodoFilterItem ({name}) {
+  const todoStore = useTodoStore()
+
   function handleFilter() {
-    filterTodos(name)
+    todoStore.filterTodos(name)
   }
 
   const style = {
     color: 'blue',
     cursor: 'pointer',
-    fontWeight: (filter === name) ? 'bold' : 'normal'
+    fontWeight: (todoStore.filter === name) ? 'bold' : 'normal'
   }
 
   return <span style={style} onClick={handleFilter}>{name}</span>
 }
 
-export default function TodoFilter(props) {
+export default function TodoFilter() {
   return (
     <div>
-      <TodoFilterItem {...props} name="all" />{' / '}
-      <TodoFilterItem {...props} name="active" />{' / '}
-      <TodoFilterItem {...props} name="completed" />
+      <TodoFilterItem name="all" />{' / '}
+      <TodoFilterItem name="active" />{' / '}
+      <TodoFilterItem name="completed" />
     </div>
   )
 }
