@@ -1,23 +1,22 @@
 import React from 'react'
+import { inject, observer } from 'mobx-react'
 
-export default function TodoItem ({title, completed, id, toggleTodo, removeTodo}) {
-  function handleToggle() {
-    toggleTodo(id)
+export default inject('todoStore')(observer(function TodoItem ({ item, todoStore }) {
+  const { title, completed, id } = item
+
+  function handleToggle () {
+    todoStore.toggleTodo(id)
   }
 
-  function handleRemove() {
-    removeTodo(id)
+  function handleRemove () {
+    todoStore.removeTodo(id)
   }
 
   return (
-    <div style={{width: 400, height: 25}}>
-      <input
-        type="checkbox"
-        checked={completed}
-        onChange={handleToggle}
-      />
+    <div style={{ width: 400, height: 25 }}>
+      <input type="checkbox" checked={completed} onChange={handleToggle} />
       {title}
-      <button style={{float: 'right'}} onClick={handleRemove}>×</button>
+      <button style={{ float: 'right' }} onClick={handleRemove}>x</button>
     </div>
   )
-}
+}))
