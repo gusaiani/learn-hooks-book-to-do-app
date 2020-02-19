@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
-import {inject} from 'mobx-react'
 
-export default (inject('todoStore'))(function AddTodo({todoStore}) {
+import {useTodoStore} from './hooks'
+
+export default function AddTodo() {
+  const todoStore = useTodoStore()
   const [input, setInput] = useState('')
 
   function handleInput(e) {
@@ -32,4 +34,4 @@ export default (inject('todoStore'))(function AddTodo({todoStore}) {
       />
     </form>
   )
-})
+}
